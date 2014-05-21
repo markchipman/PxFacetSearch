@@ -1,0 +1,16 @@
+#OS junk files
+[Tt]humbs.db
+*.DS_Store
+
+#Sublime files
+*.sublime-*
+
+# Mongoose web server (for Windows) 
+mongoose-*.exe
+
+# NodeJS modules
+node_modules
+
+# files built for the web (dev env)
+PxFacetSearch.js
+
