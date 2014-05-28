@@ -12,6 +12,7 @@
         // keep track of available choices
         this.choices = [];
         this.nullCount = 0;
+        this.choiceSortCompare = this.compareChoicesByCount;
 
         // initialize choices
         var column = this.query.table.getColumn(this.name),
@@ -72,14 +73,22 @@
         }
 
         // sort choices so most common are first
-        this.choices.sort(function(a, b) {
-            if (a.count > b.count) { return -1; }
-            if (a.count < b.count) { return 1; }
-            return 0;
-        });
+        this.choices.sort(this.choiceSortCompare);
 
         this.dirty = false;
     }
+
+    CategorySelector.prototype.compareChoicesByCount = function(a, b) {
+        if (a.count > b.count) { return -1; }
+        if (a.count < b.count) { return 1; }
+        return 0;
+    };
+
+    CategorySelector.prototype.compareChoicesByValue = function(a, b) {
+        if (a.value < b.value) { return -1; }
+        if (a.value > b.value) { return 1; }
+        return 0;
+    };
 
     function onQueryUpdate(sourceName) {
         // UI selections don't change if user made a local selection
