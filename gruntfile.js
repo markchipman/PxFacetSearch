@@ -17,6 +17,7 @@ module.exports = function(grunt) {
                     footer: '\n})();'
                 },
                 src: [
+                    'js/polyfills.js',
                     'js/namespace.js',
                     'js/Column.js',
                     'js/CategoryColumn.js',
