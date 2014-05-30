@@ -19,6 +19,7 @@ module.exports = function(grunt) {
                 src: [
                     'js/polyfills.js',
                     'js/namespace.js',
+                    'js/utils.js',
                     'js/Column.js',
                     'js/CategoryColumn.js',
                     'js/CategoryFilter.js',
