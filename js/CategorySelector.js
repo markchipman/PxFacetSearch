@@ -37,7 +37,15 @@
             values = column.values,
             localMatches = this.query.getFilterMatches(this.name),
             blockCounts = this.query.blockCounts,
-            i, globalBlocks, value, choice;
+            i, j, globalBlocks, value, choice;
+
+        var incrementChoiceCount = function(value) {
+            if (choicesByValue[value]) {
+                choicesByValue[value]++;
+            } else {
+                choicesByValue[value] = 1;
+            }
+        };
 
         this.nullCount = 0;
 
@@ -59,10 +67,12 @@
             }
 
             // increment the bucket count
-            if (choicesByValue[value]) {
-                choicesByValue[value]++;
+            if (Array.isArray(value)) {
+                for (j = 0; j < value.length; j++) {
+                    incrementChoiceCount(value[j]);
+                }
             } else {
-                choicesByValue[value] = 1;
+                incrementChoiceCount(value);
             }
         }
 
@@ -72,7 +82,7 @@
             choice.count = choicesByValue[choice.value] || 0;
         }
 
-        // sort choices so most common are first
+        // sort choices (typically most common first)
         this.choices.sort(this.choiceSortCompare);
 
         this.dirty = false;

@@ -19,35 +19,32 @@
     CategoryFilter.prototype.select = function(values) {
 
         var removeValues = PxFacetSearch.except(this.selections, values),
+            removeIds = this.column.getRemoveIds(removeValues, values),
             addValues = PxFacetSearch.except(values, this.selections),
-            addIds = [],
-            removeIds = [],
-            i, len, ids;
+            potentialAddIds = this.column.getMatchAnyIds(addValues),
+            addedIds = [],
+            i, len, ids, id, wasMatch;
 
-        // get ids for added items
-        for (i = 0, len = addValues.length; i < len; i++) {
-            ids = this.column.getMatchIds(addValues[i]);
-            addIds = addIds.concat(ids);
+        // toggle new additions
+        for (i = 0, len = potentialAddIds.length; i < len; i++) {
+            id = potentialAddIds[i];
+
+            // need to make sure it wasn't already a match
+            wasMatch = this.matches[id];
+            if (!wasMatch) {
+                this.matches[id] = true;
+                addedIds.push(id);
+            }
         }
 
-        // toggle matches
-        for (i = 0, len = addIds.length; i < len; i++) {
-            this.matches[addIds[i]] = true;
-        }
-
-        // get ids for items that no longer match
-        for (i = 0, len = removeValues.length; i < len; i++) {
-            ids = this.column.getMatchIds(removeValues[i]);
-            removeIds = removeIds.concat(ids);
-        }
-
+        // toggle removed items
         for (i = 0, len = removeIds.length; i < len; i++) {
             this.matches[removeIds[i]] = false;
         }
 
         this.selections = values;
 
-        return { addIds: addIds, removeIds: removeIds };
+        return { addIds: addedIds, removeIds: removeIds };
     };  
 
     PxFacetSearch.CategoryFilter = CategoryFilter;
