@@ -24,6 +24,7 @@ module.exports = function(grunt) {
                     'js/CategoryColumn.js',
                     'js/CategoryFilter.js',
                     'js/CategorySelector.js',
+                    'js/CategorySelectorUI.js',
                     'js/Query.js',
                     'js/Table.js',
                     'js/View.js',
