@@ -17,6 +17,11 @@
     Table.prototype.getColumn = function(columnName) {
         return this.columnsByName[columnName];
     };
+
+    Table.prototype.getValue = function(columnName, id) {
+        var column = this.columnsByName[columnName];
+        return column ? column.values[id] : undefined;
+    };
     
     PxFacetSearch.Table = Table;
 
