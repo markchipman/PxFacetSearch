@@ -2,7 +2,8 @@
     
     PxFacetSearch.ColumnType = {
         none: 'none',
-        category: 'category'
+        category: 'category',
+        range: 'range'
     };
 
     // Columns store data for a single property. No indexing in basic column.

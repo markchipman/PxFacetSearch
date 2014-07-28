@@ -20,15 +20,8 @@ module.exports = function(grunt) {
                     'js/polyfills.js',
                     'js/namespace.js',
                     'js/utils.js',
-                    'js/Column.js',
-                    'js/MultivalueColumn.js',
-                    'js/CategoryColumn.js',
-                    'js/CategoryFilter.js',
-                    'js/CategorySelector.js',
-                    'js/CategorySelectorUI.js',
-                    'js/Query.js',
-                    'js/Table.js',
-                    'js/View.js',
+                    'js/core/*.js',
+                    'js/category/*.js'
                 ],
                 dest: 'PxFacetSearch.js'
             }
