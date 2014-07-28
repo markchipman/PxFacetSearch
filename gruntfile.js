@@ -21,6 +21,7 @@ module.exports = function(grunt) {
                     'js/namespace.js',
                     'js/utils.js',
                     'js/Column.js',
+                    'js/MultivalueColumn.js',
                     'js/CategoryColumn.js',
                     'js/CategoryFilter.js',
                     'js/CategorySelector.js',

@@ -4,56 +4,18 @@
     // stores categorical data.
 
     function CategoryColumn(name, values) {
-
-        PxFacetSearch.Column.call(this, name, values);
-        this.type = PxFacetSearch.ColumnType.category;
-        
+ 
         // index mapping category to ids
         this.categoryIds = {};
 
-        // keep track of items with no value
-        this.nullIds = [];
-
-        // keep track of whether some items have multiple values
-        this.isMultiValue = false;
-
-        createValueIndexes.call(this);
+        var columnType = PxFacetSearch.ColumnType.category;
+        PxFacetSearch.MultivalueColumn.call(this, name, values, columnType);
     }
 
-    CategoryColumn.prototype = Object.create(PxFacetSearch.Column.prototype);
+    CategoryColumn.prototype = Object.create(PxFacetSearch.MultivalueColumn.prototype);
     CategoryColumn.prototype.constructor = CategoryColumn;
 
-    function createValueIndexes() {
-
-        var i, len, val;
-        for (i = 0, len = this.values.length; i < len; i++) {
-            val = this.values[i];
-            if (val || val === 0 || val === false) {
-                this.indexValue(val, i);
-            } else {
-                this.nullIds.push(i);
-            }
-        }
-    }
-
-    CategoryColumn.prototype.indexValue = function(val, id) {
-        if (Array.isArray(val)) {
-
-            this.isMultiValue = true;
-
-            // need to index each sub-value
-            for (var i = 0, len = val.length; i < len; i++) {
-                this.indexCategoryId(val[i], id);
-            }
-
-        } else {
-
-            // val contains just a single category
-            this.indexCategoryId(val, id);
-        }
-    };
-
-    CategoryColumn.prototype.indexCategoryId = function(val, id) {
+    CategoryColumn.prototype.indexSingleValue = function(val, id) {
 
         // ensure we have an array of ids for the value
         var category = this.categoryIds[val];
