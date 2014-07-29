@@ -24,8 +24,18 @@
         var i, len, column, filter;
         for (i = 0, len = this.table.columns.length; i < len; i++) {
             column = this.table.columns[i];
-            if (column.type === PxFacetSearch.ColumnType.category) {
-                filter = new PxFacetSearch.CategoryFilter(column);
+            filter = null;
+
+            switch (column.type) {
+                case PxFacetSearch.ColumnType.category:
+                    filter = new PxFacetSearch.CategoryFilter(column);
+                    break;
+                case PxFacetSearch.ColumnType.range:
+                    filter = new PxFacetSearch.RangeFilter(column);
+                    break;
+            }
+            
+            if (filter) {
                 this.filters.push(filter);
                 this.filtersByName[column.name] = filter;
             }
@@ -54,10 +64,10 @@
         this.updateCallbacks.push(callback);
     };
 
-    Query.prototype.select = function(columnName, values) {
+    Query.prototype.select = function(columnName, query) {
 
         var filter = this.filtersByName[columnName],
-            changes = filter.select(values),
+            changes = filter.select(query),
             isGlobalChange = false,
             id, i, len;
         

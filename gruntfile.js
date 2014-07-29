@@ -21,7 +21,8 @@ module.exports = function(grunt) {
                     'js/namespace.js',
                     'js/utils.js',
                     'js/core/*.js',
-                    'js/category/*.js'
+                    'js/category/*.js',
+                    'js/range/*.js'
                 ],
                 dest: 'PxFacetSearch.js'
             }
