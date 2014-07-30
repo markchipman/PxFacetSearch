@@ -3,14 +3,12 @@
     // Filter keeps track of a single union query (a OR b) of values
     // for a single property.
 
-    function Filter(column) {
+    function Filter(name) {
         
-        this.name = column.name;
-        this.column = column;
+        this.name = name;
 
         // bool array keeping track of local matches
         this.matches = [];
-        PxFacetSearch.initArray(this.matches, column.values.length, true);
     }
 
     Filter.prototype.updateSelections = function(potentialAddIds, removeIds) {
@@ -39,5 +37,18 @@
     };  
 
     PxFacetSearch.Filter = Filter;
+
+
+    // Filter tied to a single column
+    function ColumnFilter(column) {
+
+        this.column = column;
+        PxFacetSearch.Filter.call(this, column.name);
+    }
+
+    ColumnFilter.prototype = Object.create(PxFacetSearch.Filter.prototype);
+    ColumnFilter.prototype.constructor = ColumnFilter;
+
+    PxFacetSearch.ColumnFilter = ColumnFilter;
 
 })();

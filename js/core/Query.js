@@ -21,23 +21,18 @@
         this.filters = [];
         this.filtersByName = {};
 
-        var i, len, column, filter;
+        // auto-create filters for known column types
+        var i, len, column;
         for (i = 0, len = this.table.columns.length; i < len; i++) {
             column = this.table.columns[i];
-            filter = null;
-
+            
             switch (column.type) {
                 case PxFacetSearch.ColumnType.category:
-                    filter = new PxFacetSearch.CategoryFilter(column);
+                    this.addFilter(new PxFacetSearch.CategoryFilter(column));
                     break;
                 case PxFacetSearch.ColumnType.range:
-                    filter = new PxFacetSearch.RangeFilter(column);
+                    this.addFilter(new PxFacetSearch.RangeFilter(column));
                     break;
-            }
-            
-            if (filter) {
-                this.filters.push(filter);
-                this.filtersByName[column.name] = filter;
             }
         }
 
@@ -55,6 +50,12 @@
             }
         }
     }
+
+    Query.prototype.addFilter = function(filter) {
+        PxFacetSearch.initArray(filter.matches, this.table.itemCount, true);
+        this.filters.push(filter);
+        this.filtersByName[filter.name] = filter;
+    };
 
     Query.prototype.getFilterMatches = function(name) {    
         return this.filtersByName[name].matches;

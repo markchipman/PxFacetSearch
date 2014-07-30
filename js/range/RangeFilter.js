@@ -2,7 +2,7 @@
 
     function RangeFilter(column) {
 
-        PxFacetSearch.Filter.call(this, column);
+        PxFacetSearch.ColumnFilter.call(this, column);
 
         this.includeNulls = true;
 
@@ -12,7 +12,7 @@
         this.max = validRange.max;        
     }
 
-    RangeFilter.prototype = Object.create(PxFacetSearch.Filter.prototype);
+    RangeFilter.prototype = Object.create(PxFacetSearch.ColumnFilter.prototype);
     RangeFilter.prototype.constructor = RangeFilter;
 
     RangeFilter.prototype.select = function(query) {

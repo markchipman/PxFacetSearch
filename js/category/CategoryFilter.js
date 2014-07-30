@@ -4,14 +4,13 @@
     // for a single property with categorical data.
 
     function CategoryFilter(column) {
-
-        PxFacetSearch.Filter.call(this, column);
+        PxFacetSearch.ColumnFilter.call(this, column);
 
         // keep track of current selections
         this.selections = this.column.getPotentialValues();
     }
 
-    CategoryFilter.prototype = Object.create(PxFacetSearch.Filter.prototype);
+    CategoryFilter.prototype = Object.create(PxFacetSearch.ColumnFilter.prototype);
     CategoryFilter.prototype.constructor = CategoryFilter;
 
     CategoryFilter.prototype.select = function(values) {
