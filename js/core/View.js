@@ -5,6 +5,8 @@
         this.table = table;
         
         this.query = new PxFacetSearch.Query(table);
+        this.sorter = new PxFacetSearch.Sorter(table);
+        this.sortedMatchIds = this.sorter.sortIds(this.query.matchIds);
 
         // create selectors for all of the filters
         this.selectors = [];
@@ -27,7 +29,7 @@
     }
 
     function onQueryUpdate(sourceName) {
-        // TODO: set pageIndex = 0;
+        this.sortedMatchIds = this.sorter.sortIds(this.query.matchIds);
     }
 
     View.prototype.getSelector = function(columnName) {
